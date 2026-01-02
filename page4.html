@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pink Lilies For You 🌸</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0f0f0f);
+  font-family: Georgia, serif;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TITLE */
+.title {
+  position: absolute;
+  top: 50px;
+  text-align: center;
+  animation: fadeIn 2s ease;
+}
+
+.title h1 {
+  font-size: 3em;
+  color: #ffb3d9;
+  text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+}
+
+.title p {
+  color: #ff85c1;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* INSTRUCTION */
+.instruction {
+  position: absolute;
+  top: 160px;
+  color: #ffb3d9;
+  animation: pulse 2s infinite;
+  font-size: 1.1em;
+}
+
+/* LILIES */
+.lilies-container {
+  display: flex;
+  gap: 120px;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 100px;
+}
+
+.lily-container {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.lily-container:hover {
+  transform: scale(1.05);
+}
+
+/* STEM */
+.stem {
+  width: 10px;
+  height: 0;
+  background: linear-gradient(180deg, #2d4a2f, #3d5a3f, #4a6b4a);
+  border-radius: 5px;
+  position: relative;
+  margin: 0 auto;
+  animation: growStem 2s ease-out forwards;
+  box-shadow: 0 0 10px rgba(77, 107, 74, 0.3);
+}
+
+@keyframes growStem {
+  from { height: 0; }
+  to { height: 280px; }
+}
+
+/* LEAVES */
+.leaf {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  background: linear-gradient(135deg, #3d5a3f, #4a6b4a, #5a8b5a);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.leaf-left {
+  left: -70px;
+  top: 140px;
+  transform: rotate(-25deg) scale(0);
+  animation: growLeaf 1s ease-out 2s forwards;
+}
+
+.leaf-right {
+  right: -70px;
+  top: 160px;
+  transform: rotate(25deg) scale(0);
+  animation: growLeaf 1s ease-out 2.3s forwards;
+}
+
+.leaf-bottom-left {
+  left: -65px;
+  top: 200px;
+  transform: rotate(-30deg) scale(0);
+  animation: growLeaf 1s ease-out 2.6s forwards;
+}
+
+.leaf-bottom-right {
+  right: -65px;
+  top: 220px;
+  transform: rotate(30deg) scale(0);
+  animation: growLeaf 1s ease-out 2.9s forwards;
+}
+
+@keyframes growLeaf {
+  from {
+    opacity: 0;
+    transform: rotate(var(--rotation)) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--rotation)) scale(1);
+  }
+}
+
+.leaf-left { --rotation: -25deg; }
+.leaf-right { --rotation: 25deg; }
+.leaf-bottom-left { --rotation: -30deg; }
+.leaf-bottom-right { --rotation: 30deg; }
+
+/* FLOWER BUD */
+.flower {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 140px;
+  opacity: 0;
+  animation: showBud 0.5s ease-out 3.2s forwards;
+}
+
+@keyframes showBud {
+  from { opacity: 0; transform: translateX(-50%) scale(0.3); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+/* PETALS - LILY STYLE */
+.petal {
+  position: absolute;
+  width: 40px;
+  height: 100px;
+  background: linear-gradient(135deg, #ffb3d9 0%, #ff69b4 30%, #ff85c1 60%, #ffc0dd 100%);
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  transform-origin: 50% 90%;
+  box-shadow: 
+    inset -5px 0 15px rgba(255, 255, 255, 0.4),
+    inset 5px 0 15px rgba(255, 105, 180, 0.3),
+    0 5px 20px rgba(255, 105, 180, 0.3);
+  transition: all 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Petal spots/texture */
+.petal::before {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(200, 60, 120, 0.3);
+  border-radius: 50%;
+  top: 40%;
+  left: 50%;
+  box-shadow: 
+    -5px 10px 0 rgba(200, 60, 120, 0.2),
+    5px 15px 0 rgba(200, 60, 120, 0.25),
+    0 20px 0 rgba(200, 60, 120, 0.2),
+    -8px 25px 0 rgba(200, 60, 120, 0.15);
+}
+
+/* 6 petals arrangement - CLOSED position */
+.petal-1 { 
+  left: 50px; 
+  top: 20px; 
+  z-index: 6; 
+  transform: rotate(0deg);
+}
+.petal-2 { 
+  left: 25px; 
+  top: 25px; 
+  z-index: 5;
+  transform: rotate(-10deg);
+}
+.petal-3 { 
+  left: 75px; 
+  top: 25px; 
+  z-index: 5;
+  transform: rotate(10deg);
+}
+.petal-4 { 
+  left: 10px; 
+  top: 35px; 
+  z-index: 4;
+  transform: rotate(-20deg);
+}
+.petal-5 { 
+  left: 90px; 
+  top: 35px; 
+  z-index: 4;
+  transform: rotate(20deg);
+}
+.petal-6 { 
+  left: 50px; 
+  top: 45px; 
+  z-index: 3;
+  transform: rotate(0deg);
+}
+
+/* BLOOMING animation - opens naturally */
+.lily-container.blooming .petal-1 { 
+  transform: rotate(0deg) translateY(-15px);
+}
+.lily-container.blooming .petal-2 { 
+  transform: rotate(-50deg) translateX(-25px) translateY(-10px);
+}
+.lily-container.blooming .petal-3 { 
+  transform: rotate(50deg) translateX(25px) translateY(-10px);
+}
+.lily-container.blooming .petal-4 { 
+  transform: rotate(-70deg) translateX(-40px) translateY(0px);
+}
+.lily-container.blooming .petal-5 { 
+  transform: rotate(70deg) translateX(40px) translateY(0px);
+}
+.lily-container.blooming .petal-6 { 
+  transform: rotate(0deg) translateY(15px);
+}
+
+/* STAMEN - pistil and stamens */
+.flower-center {
+  position: absolute;
+  width: 6px;
+  height: 50px;
+  background: linear-gradient(180deg, #98fb98, #90ee90);
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  border-radius: 3px;
+  transition: all 1.5s ease 0.5s;
+}
+
+.lily-container.blooming .flower-center {
+  transform: translateX(-50%) scaleY(1);
+}
+
+.pistil-tip {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ffd700;
+  border-radius: 50%;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* STAMENS */
+.stamen {
+  position: absolute;
+  width: 2px;
+  height: 45px;
+  background: linear-gradient(180deg, #fff8dc, #ffd700);
+  top: 65px;
+  left: 50%;
+  transform-origin: bottom;
+  opacity: 0;
+  transition: all 1.2s ease 0.8s;
+  border-radius: 1px;
+}
+
+.stamen-1 { transform: translateX(-50%) rotate(-20deg); }
+.stamen-2 { transform: translateX(-50%) rotate(-10deg); }
+.stamen-3 { transform: translateX(-50%) rotate(10deg); }
+.stamen-4 { transform: translateX(-50%) rotate(20deg); }
+
+.lily-container.blooming .stamen {
+  opacity: 1;
+}
+
+.stamen-tip {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(135deg, #ff6347, #ff4500);
+  border-radius: 50%;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 5px rgba(255, 69, 0, 0.6);
+}
+
+/* MESSAGE */
+.message {
+  position: absolute;
+  bottom: 120px;
+  font-size: 1.5em;
+  color: #ffb3d9;
+  opacity: 0;
+  transition: 1s;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 179, 217, 0.5);
+}
+
+.final-message {
+  position: absolute;
+  bottom: 60px;
+  font-style: italic;
+  color: #ffb3d9;
+  font-size: 1.8em;
+  opacity: 0;
+  transition: 1s ease 1s;
+  text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+}
+
+.all-bloomed .message,
+.all-bloomed .final-message {
+  opacity: 1;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* SPARKLES */
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffb3d9;
+  animation: sparkleFloat 3s infinite;
+  opacity: 0;
+}
+
+@keyframes sparkleFloat {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
+  50% { opacity: 1; transform: translateY(-30px) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .lilies-container {
+    gap: 80px;
+    bottom: 120px;
+  }
+  
+  .title h1 {
+    font-size: 2em;
+  }
+  
+  .flower {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .stem {
+    height: 240px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">
+  <h1>Three Pink Lilies For You 🌸</h1>
+  <p>Click each lily to watch them bloom gracefully</p>
+</div>
+
+<div class="instruction">✨ Tap the lilies one by one ✨</div>
+
+<div class="lilies-container">
+
+  <!-- LILY 1 -->
+  <div class="lily-container">
+    <div class="stem">
+      <div class="leaf leaf-left"></div>
+      <div class="leaf leaf-right"></div>
+      <div class="leaf leaf-bottom-left"></div>
+      <div class="leaf leaf-bottom-right"></div>
+      
+      <div class="flower">
+        <div class="petal petal-1"></div>
+        <div class="petal petal-2"></div>
+        <div class="petal petal-3"></div>
+        <div class="petal petal-4"></div>
+        <div class="petal petal-5"></div>
+        <div class="petal petal-6"></div>
+        
+        <div class="flower-center">
+          <div class="pistil-tip"></div>
+        </div>
+        
+        <div class="stamen stamen-1"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-2"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-3"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-4"><div class="stamen-tip"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LILY 2 -->
+  <div class="lily-container">
+    <div class="stem">
+      <div class="leaf leaf-left"></div>
+      <div class="leaf leaf-right"></div>
+      <div class="leaf leaf-bottom-left"></div>
+      <div class="leaf leaf-bottom-right"></div>
+      
+      <div class="flower">
+        <div class="petal petal-1"></div>
+        <div class="petal petal-2"></div>
+        <div class="petal petal-3"></div>
+        <div class="petal petal-4"></div>
+        <div class="petal petal-5"></div>
+        <div class="petal petal-6"></div>
+        
+        <div class="flower-center">
+          <div class="pistil-tip"></div>
+        </div>
+        
+        <div class="stamen stamen-1"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-2"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-3"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-4"><div class="stamen-tip"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LILY 3 -->
+  <div class="lily-container">
+    <div class="stem">
+      <div class="leaf leaf-left"></div>
+      <div class="leaf leaf-right"></div>
+      <div class="leaf leaf-bottom-left"></div>
+      <div class="leaf leaf-bottom-right"></div>
+      
+      <div class="flower">
+        <div class="petal petal-1"></div>
+        <div class="petal petal-2"></div>
+        <div class="petal petal-3"></div>
+        <div class="petal petal-4"></div>
+        <div class="petal petal-5"></div>
+        <div class="petal petal-6"></div>
+        
+        <div class="flower-center">
+          <div class="pistil-tip"></div>
+        </div>
+        
+        <div class="stamen stamen-1"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-2"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-3"><div class="stamen-tip"></div></div>
+        <div class="stamen stamen-4"><div class="stamen-tip"></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="message">Just like these lilies, you make everything softer 💕</div>
+<div class="final-message">Happy Sweet Nineteen 🌸</div>
+
+<script>
+// Auto-grow animation on page load
+window.addEventListener('load', () => {
+  // Stems and leaves grow automatically (via CSS animations)
+  
+  // After growth completes, enable clicking
+  setTimeout(() => {
+    document.querySelectorAll('.lily-container').forEach(lily => {
+      lily.onclick = () => {
+        if (!lily.classList.contains('blooming')) {
+          lily.classList.add('blooming');
+          
+          // Create sparkles when blooming
+          for (let i = 0; i < 12; i++) {
+            setTimeout(() => {
+              const sparkle = document.createElement('div');
+              sparkle.className = 'sparkle';
+              const flower = lily.querySelector('.flower');
+              const rect = flower.getBoundingClientRect();
+              sparkle.style.left = (rect.left + Math.random() * 100 - 50) + 'px';
+              sparkle.style.top = (rect.top + Math.random() * 100 - 50) + 'px';
+              sparkle.style.animationDelay = Math.random() + 's';
+              document.body.appendChild(sparkle);
+              
+              setTimeout(() => sparkle.remove(), 3000);
+            }, i * 200);
+          }
+          
+          // Check if all bloomed
+          if (document.querySelectorAll('.blooming').length === 3) {
+            setTimeout(() => {
+              document.body.classList.add('all-bloomed');
+            }, 2000);
+          }
+        }
+      };
+    });
+  }, 3500);
+});
+</script>
+
+</body>
+</html>
