@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ♡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 25%, #ffa6ba 50%, #ff9fad 75%, #ff91a4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.5);
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+            border: 3px solid #ffb6c1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            animation: slideDown 1s ease-out 0.3s both;
+            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.5);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .image-container {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideDown 1s ease-out 0.5s both;
+        }
+
+        .image-container:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.6);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #666;
+            margin: 30px 0;
+            animation: slideDown 1s ease-out 0.7s both;
+        }
+
+        .message p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff69b4;
+            font-weight: bold;
+        }
+
+        /* Interactive buttons */
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            animation: slideDown 1s ease-out 0.9s both;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff85c1 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(135deg, #ff85c1 0%, #ffa1d1 100%);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Modal for memories */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            margin: 5% auto;
+            padding: 40px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 20px;
+            animation: slideDown 0.5s ease;
+            border: 3px solid #ffb6c1;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #ff69b4;
+        }
+
+        .memory-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .memory-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 100%);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            border: 2px solid #ff69b4;
+        }
+
+        .memory-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        /* Sparkles effect */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            animation: sparkleAnim 1s ease-out forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        .flower-emoji {
+            font-size: 2em;
+            display: inline-block;
+            animation: rotate 3s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            pointer-events: none;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .message {
+                font-size: 1.1em;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg" id="heartBg"></div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="birthday-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1>Happy Birthday, Pretty ✨</h1>
+        
+        <div class="image-container" onclick="createSparkles(event)">
+            <img src="child.jpg" alt="Childhood Photo" id="mainPhoto">
+        </div>
+
+        <div class="message">
+            <p>This is something small, but it's all <span class="highlight">for you</span>.</p>
+            <p>This little version of you did not know how <span class="highlight">strong</span> she would become.</p>
+            <p>She grew quietly, through things she never talked about.</p>
+            <p>I am proud of who you were, and even prouder of <span class="highlight">who you are now</span>.</p>
+            <p class="flower-emoji">🌷</p>
+        </div>
+
+        <div class="button-group">
+            <button class="btn" onclick="playMusic()">🎵 Play Music</button>
+            <button class="btn" onclick="launchConfetti()">🎉 Celebrate!</button>
+            <button class="btn" onclick="showMessage()">💌 Special Message</button>
+        </div>
+    </div>
+
+    <!-- Modal for memories -->
+    <div id="memoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: #ff69b4; margin-bottom: 20px;">Our Beautiful Memories 💫</h2>
+            <div class="memory-list">
+                <div class="memory-item" onclick="alert('🌟 When we first met...')">
+                    🌟 First Meeting
+                </div>
+                <div class="memory-item" onclick="alert('😊 When you smiled and everything became better')">
+                    😊 Beautiful Smile
+                </div>
+                <div class="memory-item" onclick="alert('🌈 Days filled with laughter together')">
+                    🌈 Endless Laughter
+                </div>
+                <div class="memory-item" onclick="alert('💪 When you showed how strong you are')">
+                    💪 Your Strength
+                </div>
+                <div class="memory-item" onclick="alert('✨ And many more beautiful moments...')">
+                    ✨ And Many More...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const heartBg = document.getElementById('heartBg');
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '🌸', '🌺', '🌷'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heartBg.appendChild(heart);
+            }
+        }
+
+        // Create sparkles on image click
+        function createSparkles(event) {
+            const sparkles = ['✨', '⭐', '💫', '🌟'];
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.left = event.clientX + (Math.random() - 0.5) * 100 + 'px';
+                sparkle.style.top = event.clientY + (Math.random() - 0.5) * 100 + 'px';
+                sparkle.style.fontSize = Math.random() * 20 + 20 + 'px';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+        // Show memories modal
+        function showMemories() {
+            document.getElementById('memoryModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('memoryModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('memoryModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Play music (simulated)
+        function playMusic() {
+            const audio = document.getElementById('bgMusic');
+            if (audio.paused) {
+                audio.play();
+                alert('🎵 Playing your special song... 🎶');
+            } else {
+                audio.pause();
+                alert('⏸️ Music paused');
+            }
+        }
+
+        // Launch confetti
+        function launchConfetti() {
+            const colors = ['#ff69b4', '#ffb6c1', '#ffc0cb', '#ff85c1', '#ffa1d1', '#ffb3d9'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Show special message
+        function showMessage() {
+            // Fade out and navigate to page 3
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'page3.html';
+            }, 500);
+        }
+
+        // Initialize floating hearts on load
+        window.onload = function() {
+            createFloatingHearts();
+        };
+    </script>
+</body>
+</html>
