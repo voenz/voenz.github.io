@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUR BEAUTYYY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 25%, #ffa6ba 50%, #ff9fad 75%, #ff91a4 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(255, 105, 180, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #fff;
+            font-style: italic;
+        }
+
+        .polaroid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            perspective: 1000px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px;
+            padding-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .polaroid:nth-child(1) {
+            transform: rotate(-5deg);
+            animation-delay: 0s;
+        }
+
+        .polaroid:nth-child(2) {
+            transform: rotate(3deg);
+            animation-delay: 1s;
+        }
+
+        .polaroid:nth-child(3) {
+            transform: rotate(-3deg);
+            animation-delay: 2s;
+        }
+
+        .polaroid:nth-child(4) {
+            transform: rotate(4deg);
+            animation-delay: 3s;
+        }
+
+        .polaroid:nth-child(5) {
+            transform: rotate(-4deg);
+            animation-delay: 4s;
+        }
+
+        .polaroid:nth-child(6) {
+            transform: rotate(2deg);
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(var(--rotation));
+            }
+            50% {
+                transform: translateY(-20px) rotate(var(--rotation));
+            }
+        }
+
+        .polaroid:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .polaroid img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .polaroid-caption {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+
+        .letter-section {
+            max-width: 800px;
+            margin: 80px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+            animation: slideUp 1s ease 0.5s both;
+            border: 3px solid #ffb6c1;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .letter-section h2 {
+            color: #ff69b4;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .letter-content {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            color: #ff69b4;
+            margin-top: 40px;
+            font-size: 1.3em;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px 15px;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff85c1 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .heart-float {
+            position: fixed;
+            pointer-events: none;
+            animation: heartFloat 10s infinite;
+            opacity: 0;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .polaroid img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .letter-section {
+                padding: 40px 30px;
+            }
+
+            .letter-content {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Your Beauty 💕</h1>
+        <p>You're the Most Beautiful Girl I've Ever seen<</p>
+    </div>
+
+    <div class="polaroid-container">
+        <div class="polaroid">
+            <img src="photo1.jpg" alt="Memory 1">
+            <div class="polaroid-caption">Your brightest smile ✨</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="photo2.jpg" alt="Memory 2">
+            <div class="polaroid-caption">Your Beauty Eyes 🌸</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="photo3.jpg" alt="Memory 3">
+            <div class="polaroid-caption">Your Soft hair 🌈</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="photo4.jpg" alt="Memory 4">
+            <div class="polaroid-caption">Your light skin 💫</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="photo5.jpg" alt="Memory 5">
+            <div class="polaroid-caption">Your Pretty Face 🎀</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="photo6.jpg" alt="Memory 6">
+            <div class="polaroid-caption">Your soft heart 💖</div>
+        </div>
+    </div>
+
+    <div class="letter-section">
+      <h2>A Letter For You 💌</h2>
+        <div class="letter-content">
+            <p>Happy 19th birthday, my love. I really hope the universe decides to be kinder to you from now on. I hope life slowly starts making sense, that things fall into place without you having to fight so hard for them. You've earned peace. You've earned gentleness. You've earned days that feel light instead of heavy.</p>
+            
+            <p>I hope every dream you whisper to yourself late at night finds its way into reality, one by one. The quiet ones, the impossible ones, the ones you're almost afraid to say out loud—I hope they all come true. You deserve that kind of magic, the quiet kind that stays, the kind that wraps around you like sunlight through a window on a calm morning.</p>
+            
+            <p>Thank you for making it through 19 years of life. I know it hasn't always been easy. I know there were moments when it felt like too much, when the weight of everything made it hard to breathe. But you're still here, still standing, still trying, and that alone means so much. You kept going even when you didn't know how. That's not just strength—that's courage in its purest form.</p>
+            
+            <p>I'm so proud of you. For surviving. For growing. For not giving up even when things felt unbearably heavy. You're stronger than you realize, and your heart is softer than this world deserves. You've been through so much, and somehow you still choose kindness. You still choose to care. You still choose to love deeply. That's extraordinary.</p>
+            
+            <p>I'm grateful for you. For your presence, your love, your warmth, and every small moment you share with me. The way you laugh, the way you listen, the way you make everything feel calmer just by existing—it all matters. You make my days feel safer and more meaningful. Being with you is my favorite place to be. You feel like home in a world that often feels too loud, too fast, too cold.</p>
+            
+            <p>I love you so much. Like, more than words could ever capture. More than distance could ever measure. More than bad days could ever diminish. I love you in the quiet moments and the loud ones, when you're at your best and when you're struggling. I love you for exactly who you are, right now, in this moment—not who you think you need to become.</p>
+            
+            <p>I hope today you feel how deeply loved you are. I hope you feel celebrated, protected, and surrounded by good energy. I hope you feel seen and valued and cherished, because you are all of those things and more. You deserve to feel that today and every day after.</p>
+            
+            <p>No matter what this new year brings—whether it's gentle or challenging, whether it unfolds the way you hope or takes unexpected turns—I'm here for you. Always rooting for you. Always choosing you. On good days and bad days. When you're soaring and when you're falling. When you're confident and when you're doubting everything. I'm here, and I'm not going anywhere.</p>
+            
+            <p>May 19 be the year things start to shift. May it bring you clarity where there's been confusion, peace where there's been chaos, joy where there's been heaviness. May you find yourself in places you never expected, surrounded by moments that make you grateful to be alive. May you finally, finally catch your breath and realize: You made it. You're here. And beautiful things are still possible.</p>
+            
+            <p>You are so deeply loved. Not for what you do or what you achieve, but for simply being you. For existing exactly as you are. You don't have to be perfect. You don't have to have it all figured out. You're enough, just like this.</p>
+            
+            <p class="signature">
+                Happy 19th birthday, my love. Here's to you. Here's to us. Here's to everything beautiful that's still coming. 🤍
+            </p>
+        </div>
+
+    <div class="buttons-container">
+        <a href="celebration.html" class="back-button">← Back to Celebration</a>
+        <a href="page4.html" class="back-button">Continue to Final Surprise →</a>
+    </div>
+
+    <script>
+        function createFloatingHearts() {
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '🌸'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 10000);
+            }, 2000);
+        }
+
+        document.querySelectorAll('.polaroid').forEach(polaroid => {
+            polaroid.addEventListener('click', function(event) {
+                for (let i = 0; i < 8; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.textContent = '✨';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = event.clientX + (Math.random() - 0.5) * 100 + 'px';
+                    sparkle.style.top = event.clientY + (Math.random() - 0.5) * 100 + 'px';
+                    sparkle.style.fontSize = '25px';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '1000';
+                    sparkle.style.animation = 'sparkleEffect 1s ease-out forwards';
+                    document.body.appendChild(sparkle);
+
+                    setTimeout(() => sparkle.remove(), 1000);
+                }
+            });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleEffect {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.5) rotate(180deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        window.onload = function() {
+            createFloatingHearts();
+        };
+    </script>
+</body>
+</html>
