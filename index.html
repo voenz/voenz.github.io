@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #ffe6f0, #fff5fa);
+  font-family: "Georgia", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating hearts background */
+.heart-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0;
+  animation: float 15s infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.card {
+  background: rgba(255,255,255,0.65);
+  border-radius: 30px;
+  padding: 45px 35px;
+  box-shadow: 0 20px 40px rgba(255,182,193,0.4);
+  text-align: center;
+  max-width: 320px;
+  animation: floatIn 1.2s ease;
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+p {
+  color: #4d0026;
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.dots {
+  margin-top: 16px;
+  letter-spacing: 6px;
+  color: #d98ca6;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.enter {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 10px 22px;
+  background: #ffd1e6;
+  border-radius: 22px;
+  color: #7a003c;
+  font-size: 13px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(255,182,193,0.6);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.enter:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(255,182,193,0.8);
+  background: #ffbdd8;
+}
+
+.enter:active {
+  transform: scale(0.95);
+}
+
+/* Sparkle effect on hover */
+.sparkle-container {
+  position: relative;
+  display: inline-block;
+}
+
+@media (max-width: 600px) {
+  .card {
+    max-width: 280px;
+    padding: 35px 25px;
+  }
+  
+  p {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="heart-bg" id="heartBg"></div>
+
+  <div class="card">
+    <p>
+      happy birthday, pretty.<br>
+      this is something small,<br>
+      but it's all for you.
+    </p>
+    <div class="dots">· · ·</div>
+    <div class="sparkle-container">
+      <a href="#page2" class="enter" onclick="goToPage2(event)">open this ♡</a>
+    </div>
+  </div>
+
+  <script>
+    // Create floating hearts background
+    function createFloatingHearts() {
+      const heartBg = document.getElementById('heartBg');
+      const hearts = ['💕', '💖', '💗', '💓', '💝', '🌸', '🌺', '🌷'];
+      
+      for (let i = 0; i < 12; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDelay = Math.random() * 15 + 's';
+        heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+        heartBg.appendChild(heart);
+      }
+    }
+
+    // Navigate to page 2 with smooth transition
+    function goToPage2(event) {
+      event.preventDefault();
+      
+      // Create fade out effect
+      document.body.style.transition = 'opacity 0.5s ease';
+      document.body.style.opacity = '0';
+      
+      // Wait for fade out, then navigate to page 2
+      setTimeout(() => {
+        window.location.href = 'page2.html';
+      }, 500);
+    }
+
+    // Add sparkle effect on button hover
+    const enterBtn = document.querySelector('.enter');
+    enterBtn.addEventListener('mouseenter', function(e) {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('span');
+          sparkle.textContent = '✨';
+          sparkle.style.position = 'fixed';
+          sparkle.style.left = e.clientX + (Math.random() - 0.5) * 50 + 'px';
+          sparkle.style.top = e.clientY + (Math.random() - 0.5) * 50 + 'px';
+          sparkle.style.fontSize = '20px';
+          sparkle.style.pointerEvents = 'none';
+          sparkle.style.animation = 'sparkleAnim 1s ease-out forwards';
+          sparkle.style.zIndex = '1000';
+          document.body.appendChild(sparkle);
+          
+          setTimeout(() => sparkle.remove(), 1000);
+        }, i * 100);
+      }
+    });
+
+    // Sparkle animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes sparkleAnim {
+        0% {
+          transform: scale(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.5) rotate(180deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize
+    window.onload = function() {
+      createFloatingHearts();
+    };
+  </script>
+</body>
+</html>
